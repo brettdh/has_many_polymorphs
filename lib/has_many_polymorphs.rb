@@ -6,6 +6,8 @@ RAILS_DEFAULT_LOGGER = nil unless defined? RAILS_DEFAULT_LOGGER
 require 'has_many_polymorphs/reflection'
 require 'has_many_polymorphs/association'
 require 'has_many_polymorphs/class_methods'
+require 'has_many_polymorphs/nested_attributes'
+require 'has_many_polymorphs/autosave_association'
 
 require 'has_many_polymorphs/support_methods'
 require 'has_many_polymorphs/base'
