@@ -27,7 +27,13 @@ class HMPNestedAttributesTest < ActiveSupport::TestCase
       "possessions_attributes" => possessions_params
     }
     
-    owner.update_attributes(owner_params) # here's the failure
+    # This call demonstrates that has_many_polymorphs doesn't quite work
+    #  with accepts_nested_attributes_for, due to the :has_many_polymorphs
+    #  reflection macro not being a part of a couple switches in ActiveRecord.
+    # The relevant files in ActiveRecord are:
+    #   .../active_record/autosave_association.rb
+    #   .../active_record/nested_attributes.rb
+    owner.update_attributes(owner_params)
     
     # This is really testing accepts_nested_attributes_for, I guess.
     car.reload
