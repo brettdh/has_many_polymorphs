@@ -47,5 +47,31 @@ if Rails::VERSION::MAJOR >= 2 and Rails::VERSION::MINOR >= 3
       assert_equal "1977 3-door Volkswagon Beetle", car.description
       assert_equal "1970 7-string Gibson SG Special", guitar.description
     end
+    
+    def test_nested_associated_objects
+      if Rails::VERSION::MAJOR < 2 or Rails::VERSION::MINOR < 3
+        assert true, "Nested attributes not present in Rails before v2.3"
+        return
+      end
+      
+      owner = Owner.find(1)
+      possessions_attr = {
+        "#{Time.now.tv_sec}" => {
+          "description" => "Corvette",
+          "type" => "Car"
+        }, 
+        "#{Time.now.tv_sec + 1}" => {
+          "description" => "Flying V",
+          "type" => "Guitar"
+        }
+      }
+      owner_attr = {
+        "id" => 1, "name" => "Jones",
+        "possessions_attributes" => possessions_attr
+      }
+      owner.update_attributes(owner_attr)
+      owner.reload
+      assert_equal 2, owner.possessions.size
+    end
   end
 end
